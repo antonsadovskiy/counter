@@ -47,7 +47,7 @@ function App() {
         setCount(count + 1)
     }
     const resetCounter = () => {
-        setCount(0)
+        setCount(startValue)
     }
 
     const changeMaxValue = (value: number) => {
