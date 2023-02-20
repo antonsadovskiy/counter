@@ -1,0 +1,14 @@
+.displayContainer {
+    height: 70px;
+    border: 1px solid black;
+    margin: 10px 10px 0 10px;
+    border-radius: 6px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}
+.error {
+    color: red;
+}

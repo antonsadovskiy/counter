@@ -1,0 +1,16 @@
+.counterContainer {
+    width: 320px;
+    height: 145px;
+    border: 1px solid black;
+    border-radius: 6px;
+}
+.buttonContainer {
+    border: 1px solid black;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px;
+    gap: 40px;
+    padding: 5px;
+}
