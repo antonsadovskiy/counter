@@ -5,7 +5,7 @@ import Settings from "./components/Settings/Settings";
 
 function App() {
 
-    const [maxValue, setMaxValue] = useState<number>(0)
+    const [maxValue, setMaxValue] = useState<number>(5)
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(0)
     const [error, setError] = useState<string>('')
@@ -38,16 +38,18 @@ function App() {
     }, [startValue, maxValue, count, error])
 
     const incCounter = () => {
-        if (count + 1 === maxValue){
+        const newCount = count + 1
+        if (newCount === maxValue){
             setIsCountEqualsToMaxValue(true)
         }
         else {
             setIsCountEqualsToMaxValue(false)
         }
-        setCount(count + 1)
+        setCount(newCount)
     }
     const resetCounter = () => {
         setCount(startValue)
+        setIsCountEqualsToMaxValue(false)
     }
 
     const changeMaxValue = (value: number) => {
@@ -68,6 +70,7 @@ function App() {
     const clickSetButtonHandler = () => {
         setButtonIsClicked(true)
     }
+
 
     return (
         <div className="App">
