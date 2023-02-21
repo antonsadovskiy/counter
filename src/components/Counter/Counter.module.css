@@ -1,6 +1,6 @@
 .counterContainer {
     width: 320px;
-    height: 145px;
+    height: auto;
     border: 1px solid black;
     box-shadow: 1px 2px 2px gray;
 }
@@ -12,4 +12,5 @@
     margin: 10px;
     gap: 40px;
     padding: 5px;
+    height: 30px;
 }

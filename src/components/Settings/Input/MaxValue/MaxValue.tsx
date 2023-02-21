@@ -9,28 +9,39 @@ type MaxValuePropsType = {
     error: string
 }
 
-const MaxValue:FC<MaxValuePropsType> = (props) => {
+const MaxValue:FC<MaxValuePropsType> = ({
+    maxValue,
+    changeMaxValue,
+    startValue,
+    trackError,
+    error
+    }
+) => {
 
-    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-        const max = JSON.parse(e.currentTarget.value)
-        props.changeMaxValue(max)
+    const defineError = (max: number, start: number) => {
         if (max < 0) {
-            props.trackError('incorrect value')
-        } else if (max > props.startValue){
-            props.trackError('')
-        } else if (max === props.startValue){
-            props.trackError('max value equals to start value')
-        } else if (max < props.startValue){
-            props.trackError('max value lower than start value')
+            trackError('incorrect value')
+        } else if (max === start){
+            trackError('max value equals to start value')
+        } else if (max < start){
+            trackError('max value lower than start value')
+        } else {
+            trackError('')
         }
     }
 
-    const inputClass = props.error? style.errorInput : style.input
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+        const maxValue = JSON.parse(e.currentTarget.value)
+        changeMaxValue(maxValue)
+        defineError(maxValue, startValue)
+    }
+
+    const inputClass = error? style.errorInput : style.input
 
     return (
         <div className={style.maxValueContainer}>
             <h3>max value:</h3>
-            <input className={inputClass} type={'number'} value={props.maxValue} onChange={onChangeHandler}/>
+            <input className={inputClass} type={'number'} value={maxValue} onChange={onChangeHandler}/>
         </div>
     );
 };

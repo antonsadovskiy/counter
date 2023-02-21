@@ -9,7 +9,7 @@ function App() {
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(0)
     const [error, setError] = useState<string>('')
-    const [buttonIsClicked, setButtonIsClicked] = useState<boolean>(false)
+    const [setButtonIsClicked, setSetButtonIsClicked] = useState<boolean>(false)
     const [isCountEqualsToMaxValue, setIsCountEqualsToMaxValue] = useState<boolean>(false)
 
     useEffect(() => {
@@ -54,11 +54,13 @@ function App() {
 
     const changeMaxValue = (value: number) => {
         setMaxValue(value)
-        setButtonIsClicked(false)
+        setSetButtonIsClicked(false)
+        setIsCountEqualsToMaxValue(false)
     }
     const changeStartValue = (value: number) => {
         setStartValue(value)
-        setButtonIsClicked(false)
+        setSetButtonIsClicked(false)
+        setIsCountEqualsToMaxValue(false)
     }
     const setStartValueAsCount = () => {
         setCount(startValue)
@@ -68,7 +70,7 @@ function App() {
         setError(error)
     }
     const clickSetButtonHandler = () => {
-        setButtonIsClicked(true)
+        setSetButtonIsClicked(true)
     }
 
 
@@ -81,13 +83,13 @@ function App() {
                       setStartValueAsCount={setStartValueAsCount}
                       trackError={trackError}
                       error={error}
-                      buttonIsClicked={buttonIsClicked}
+                      setButtonIsClicked={setButtonIsClicked}
                       clickSetButtonHandler={clickSetButtonHandler}/>
             <Counter count={count}
                      incCounter={incCounter}
                      resetCounter={resetCounter}
                      error={error}
-                     buttonIsClicked={buttonIsClicked}
+                     setButtonIsClicked={setButtonIsClicked}
                      isCountEqualsToMaxValue={isCountEqualsToMaxValue} />
         </div>
     );

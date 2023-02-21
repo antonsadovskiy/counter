@@ -8,27 +8,43 @@ type CounterPropsType = {
     incCounter: () => void
     resetCounter: () => void
     error: string
-    buttonIsClicked: boolean
+    setButtonIsClicked: boolean
     isCountEqualsToMaxValue: boolean
 }
 
-const Counter:FC<CounterPropsType> = (props) => {
+const Counter:FC<CounterPropsType> = ({
+    count,
+    incCounter,
+    resetCounter,
+    error,
+    setButtonIsClicked,
+    isCountEqualsToMaxValue
+    }
+) => {
+
+    const incCounterHandler = () => {
+        incCounter()
+    }
+    const resetCounterHandler = () => {
+        resetCounter()
+    }
+
     return (
         <div className={style.counterContainer}>
-            <Display count={props.count}
-                     error={props.error}
-                     buttonIsClicked={props.buttonIsClicked}
-                     isCountEqualsToMaxValue={props.isCountEqualsToMaxValue}/>
+            <Display count={count}
+                     error={error}
+                     setButtonIsClicked={setButtonIsClicked}
+                     isCountEqualsToMaxValue={isCountEqualsToMaxValue}/>
             <div className={style.buttonContainer}>
                 <Button name={'inc'}
-                        callback={() => props.incCounter()}
-                        error={props.error}
-                        buttonIsClicked={!props.buttonIsClicked}
-                        isCountEqualsToMaxValue={props.isCountEqualsToMaxValue}/>
+                        callback={incCounterHandler}
+                        error={error}
+                        setButtonIsClicked={!setButtonIsClicked}
+                        isCountEqualsToMaxValue={isCountEqualsToMaxValue}/>
                 <Button name={'reset'}
-                        callback={() => props.resetCounter()}
-                        error={props.error}
-                        buttonIsClicked={!props.buttonIsClicked}/>
+                        callback={resetCounterHandler}
+                        error={error}
+                        setButtonIsClicked={!setButtonIsClicked}/>
             </div>
         </div>
     );

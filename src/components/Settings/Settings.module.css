@@ -1,12 +1,13 @@
 .settingsContainer {
     width: 320px;
-    height: 145px;
+    height: auto;
     border: 1px solid black;
     box-shadow: 2px 2px 3px gray;
 }
 .buttonContainer {
     border: 1px solid black;
-    margin: 0 10px 0 10px;
+    margin: 10px;
+    height: 30px;
     padding: 5px;
     display: flex;
     align-items: center;

@@ -5,23 +5,28 @@ type ButtonPropsType = {
     name: string
     callback: () => void
     error: string
-    buttonIsClicked: boolean
+    setButtonIsClicked: boolean
     isCountEqualsToMaxValue?: boolean
 }
 
-const Button:FC<ButtonPropsType> = ({name, ...props}) => {
+const Button:FC<ButtonPropsType> = ({
+    name,
+    callback,
+    error,
+    setButtonIsClicked,
+    isCountEqualsToMaxValue,
+    }
+) => {
 
     const onClickHandler = () => {
-        props.callback()
+        callback()
     }
 
-    const setButtonIsClicked = props.buttonIsClicked
-    const countValueEqualsToMax = props.isCountEqualsToMaxValue
-    const error = !!props.error || setButtonIsClicked || countValueEqualsToMax
+    const errorType = !!error || setButtonIsClicked || isCountEqualsToMaxValue
 
     return (
         <div className={style.button}>
-            <button disabled={error} onClick={onClickHandler}>{name}</button>
+            <button disabled={errorType} onClick={onClickHandler}>{name}</button>
         </div>
     );
 };

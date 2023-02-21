@@ -4,18 +4,24 @@ import style from './Display.module.css'
 type DisplayPropsType = {
     count: number
     error: string
-    buttonIsClicked: boolean
+    setButtonIsClicked: boolean
     isCountEqualsToMaxValue: boolean
 }
 
-const Display:FC<DisplayPropsType> = (props) => {
+const Display:FC<DisplayPropsType> = ({
+    count,
+    error,
+    setButtonIsClicked,
+    isCountEqualsToMaxValue
+    }
+) => {
 
-    const spanClass = style.display + (props.isCountEqualsToMaxValue? " " + style.error : " ");
+    const errorValue = style.display + (isCountEqualsToMaxValue? " " + style.errorValue : "")
 
     return (
         <div className={style.displayContainer}>
-            <span className={spanClass}>
-                {props.error? props.error : props.buttonIsClicked? props.count : "enter values and press set"}
+            <span className={errorValue}>
+                {error? error : setButtonIsClicked? count : "enter values and press set"}
             </span>
         </div>
     );

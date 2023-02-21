@@ -12,19 +12,27 @@ type InputPropsType = {
     trackError: (error: string) => void
 }
 
-const Input:FC<InputPropsType> = (props) => {
+const Input:FC<InputPropsType> = ({
+    maxValue,
+    changeMaxValue,
+    startValue,
+    changeStartValue,
+    error,
+    trackError,
+    }
+) => {
     return (
         <div className={style.inputContainer}>
-            <MaxValue maxValue={props.maxValue}
-                      changeMaxValue={props.changeMaxValue}
-                      startValue={props.startValue}
-                      trackError={props.trackError}
-                      error={props.error}/>
-            <StartValue startValue={props.startValue}
-                        changeStartValue={props.changeStartValue}
-                        maxValue={props.maxValue}
-                        trackError={props.trackError}
-                        error={props.error}/>
+            <MaxValue maxValue={maxValue}
+                      changeMaxValue={changeMaxValue}
+                      startValue={startValue}
+                      trackError={trackError}
+                      error={error}/>
+            <StartValue startValue={startValue}
+                        changeStartValue={changeStartValue}
+                        maxValue={maxValue}
+                        trackError={trackError}
+                        error={error}/>
         </div>
     );
 };
