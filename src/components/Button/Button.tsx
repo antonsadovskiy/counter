@@ -7,6 +7,7 @@ type ButtonPropsType = {
     error: string
     buttonIsNotClicked?: boolean
     disableIncButton?: boolean
+    disableResetButton?: boolean
 }
 
 const Button: FC<ButtonPropsType> = (
@@ -15,7 +16,8 @@ const Button: FC<ButtonPropsType> = (
         callback,
         error,
         buttonIsNotClicked,
-        disableIncButton
+        disableIncButton,
+        disableResetButton
     }
 ) => {
 
@@ -23,7 +25,7 @@ const Button: FC<ButtonPropsType> = (
         callback()
     }
 
-    const errorType = error !== '' || buttonIsNotClicked || disableIncButton
+    const errorType = error !== '' || buttonIsNotClicked || disableIncButton || disableResetButton
 
     return (
         <div className={style.button}>

@@ -12,6 +12,7 @@ function App() {
     const [buttonIsNotClicked, setButtonIsNotClicked] = useState<boolean>(true)
 
     const disableIncButton = count === maxValue
+    const disableResetButton = count === startValue
 
     useEffect(() => {
         const countValue = localStorage.getItem('counterValue')
@@ -81,7 +82,8 @@ function App() {
                      resetCounter={resetCounter}
                      error={error}
                      buttonIsNotClicked={buttonIsNotClicked}
-                     disableIncButton={disableIncButton}/>
+                     disableIncButton={disableIncButton}
+                     disableResetButton={disableResetButton}/>
         </div>
     );
 }

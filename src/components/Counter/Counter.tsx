@@ -10,6 +10,7 @@ type CounterPropsType = {
     error: string
     buttonIsNotClicked: boolean
     disableIncButton: boolean
+    disableResetButton: boolean
 }
 
 const Counter: FC<CounterPropsType> = (
@@ -19,7 +20,8 @@ const Counter: FC<CounterPropsType> = (
         resetCounter,
         error,
         buttonIsNotClicked,
-        disableIncButton
+        disableIncButton,
+        disableResetButton
     }
 ) => {
 
@@ -45,7 +47,8 @@ const Counter: FC<CounterPropsType> = (
                 <Button name={'reset'}
                         callback={resetCounterHandler}
                         error={error}
-                        buttonIsNotClicked={buttonIsNotClicked}/>
+                        buttonIsNotClicked={buttonIsNotClicked}
+                        disableResetButton={disableResetButton}/>
 
             </div>
         </div>
