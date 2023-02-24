@@ -9,26 +9,27 @@ type SettingsPropsType = {
     startValue: number
     changeStartValue: (value: number) => void
     setStartValueAsCount: () => void
-    trackError: (error: string) => void
     error: string
-    setButtonIsClicked: boolean
+    trackError: (error: string) => void
+    buttonIsNotClicked: boolean
     clickSetButtonHandler: () => void
 }
 
-const Settings:FC<SettingsPropsType> = ({
-    maxValue,
-    changeMaxValue,
-    startValue,
-    changeStartValue,
-    setStartValueAsCount,
-    trackError,
-    error,
-    setButtonIsClicked,
-    clickSetButtonHandler,
+const Settings: FC<SettingsPropsType> = (
+    {
+        maxValue,
+        changeMaxValue,
+        startValue,
+        changeStartValue,
+        setStartValueAsCount,
+        trackError,
+        error,
+        buttonIsNotClicked,
+        clickSetButtonHandler,
     }
 ) => {
 
-    const onClickHandler = () => {
+    const onClickSetStartValue = () => {
         setStartValueAsCount()
         clickSetButtonHandler()
     }
@@ -43,9 +44,9 @@ const Settings:FC<SettingsPropsType> = ({
                    error={error}/>
             <div className={style.buttonContainer}>
                 <Button name={"set"}
-                        callback={onClickHandler}
+                        callback={onClickSetStartValue}
                         error={error}
-                        setButtonIsClicked={setButtonIsClicked}/>
+                        buttonIsNotClicked={!buttonIsNotClicked}/>
             </div>
         </div>
     );

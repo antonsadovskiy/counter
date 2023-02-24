@@ -12,13 +12,14 @@ type InputPropsType = {
     trackError: (error: string) => void
 }
 
-const Input:FC<InputPropsType> = ({
-    maxValue,
-    changeMaxValue,
-    startValue,
-    changeStartValue,
-    error,
-    trackError,
+const Input: FC<InputPropsType> = (
+    {
+        maxValue,
+        changeMaxValue,
+        startValue,
+        changeStartValue,
+        error,
+        trackError,
     }
 ) => {
     return (

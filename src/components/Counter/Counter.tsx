@@ -8,17 +8,18 @@ type CounterPropsType = {
     incCounter: () => void
     resetCounter: () => void
     error: string
-    setButtonIsClicked: boolean
-    isCountEqualsToMaxValue: boolean
+    buttonIsNotClicked: boolean
+    disableIncButton: boolean
 }
 
-const Counter:FC<CounterPropsType> = ({
-    count,
-    incCounter,
-    resetCounter,
-    error,
-    setButtonIsClicked,
-    isCountEqualsToMaxValue
+const Counter: FC<CounterPropsType> = (
+    {
+        count,
+        incCounter,
+        resetCounter,
+        error,
+        buttonIsNotClicked,
+        disableIncButton
     }
 ) => {
 
@@ -33,18 +34,19 @@ const Counter:FC<CounterPropsType> = ({
         <div className={style.counterContainer}>
             <Display count={count}
                      error={error}
-                     setButtonIsClicked={setButtonIsClicked}
-                     isCountEqualsToMaxValue={isCountEqualsToMaxValue}/>
+                     buttonIsNotClicked={buttonIsNotClicked}
+                     disableIncButton={disableIncButton}/>
             <div className={style.buttonContainer}>
                 <Button name={'inc'}
                         callback={incCounterHandler}
                         error={error}
-                        setButtonIsClicked={!setButtonIsClicked}
-                        isCountEqualsToMaxValue={isCountEqualsToMaxValue}/>
+                        buttonIsNotClicked={buttonIsNotClicked}
+                        disableIncButton={disableIncButton}/>
                 <Button name={'reset'}
                         callback={resetCounterHandler}
                         error={error}
-                        setButtonIsClicked={!setButtonIsClicked}/>
+                        buttonIsNotClicked={buttonIsNotClicked}/>
+
             </div>
         </div>
     );

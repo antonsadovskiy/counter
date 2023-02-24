@@ -9,8 +9,9 @@ function App() {
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(0)
     const [error, setError] = useState<string>('')
-    const [setButtonIsClicked, setSetButtonIsClicked] = useState<boolean>(false)
-    const [isCountEqualsToMaxValue, setIsCountEqualsToMaxValue] = useState<boolean>(false)
+    const [buttonIsNotClicked, setButtonIsNotClicked] = useState<boolean>(true)
+
+    const disableIncButton = count === maxValue
 
     useEffect(() => {
         const countValue = localStorage.getItem('counterValue')
@@ -39,38 +40,28 @@ function App() {
 
     const incCounter = () => {
         const newCount = count + 1
-        if (newCount === maxValue){
-            setIsCountEqualsToMaxValue(true)
-        }
-        else {
-            setIsCountEqualsToMaxValue(false)
-        }
         setCount(newCount)
     }
     const resetCounter = () => {
         setCount(startValue)
-        setIsCountEqualsToMaxValue(false)
     }
 
     const changeMaxValue = (value: number) => {
         setMaxValue(value)
-        setSetButtonIsClicked(false)
-        setIsCountEqualsToMaxValue(false)
+        setButtonIsNotClicked(true)
     }
     const changeStartValue = (value: number) => {
         setStartValue(value)
-        setSetButtonIsClicked(false)
-        setIsCountEqualsToMaxValue(false)
+        setButtonIsNotClicked(true)
     }
     const setStartValueAsCount = () => {
         setCount(startValue)
-        setIsCountEqualsToMaxValue(false)
     }
     const trackError = (error: string) => {
         setError(error)
     }
     const clickSetButtonHandler = () => {
-        setSetButtonIsClicked(true)
+        setButtonIsNotClicked(false)
     }
 
 
@@ -81,16 +72,16 @@ function App() {
                       startValue={startValue}
                       changeStartValue={changeStartValue}
                       setStartValueAsCount={setStartValueAsCount}
-                      trackError={trackError}
                       error={error}
-                      setButtonIsClicked={setButtonIsClicked}
+                      trackError={trackError}
+                      buttonIsNotClicked={buttonIsNotClicked}
                       clickSetButtonHandler={clickSetButtonHandler}/>
             <Counter count={count}
                      incCounter={incCounter}
                      resetCounter={resetCounter}
                      error={error}
-                     setButtonIsClicked={setButtonIsClicked}
-                     isCountEqualsToMaxValue={isCountEqualsToMaxValue} />
+                     buttonIsNotClicked={buttonIsNotClicked}
+                     disableIncButton={disableIncButton}/>
         </div>
     );
 }

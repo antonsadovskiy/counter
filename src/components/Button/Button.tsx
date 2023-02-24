@@ -5,16 +5,17 @@ type ButtonPropsType = {
     name: string
     callback: () => void
     error: string
-    setButtonIsClicked: boolean
-    isCountEqualsToMaxValue?: boolean
+    buttonIsNotClicked?: boolean
+    disableIncButton?: boolean
 }
 
-const Button:FC<ButtonPropsType> = ({
-    name,
-    callback,
-    error,
-    setButtonIsClicked,
-    isCountEqualsToMaxValue,
+const Button: FC<ButtonPropsType> = (
+    {
+        name,
+        callback,
+        error,
+        buttonIsNotClicked,
+        disableIncButton
     }
 ) => {
 
@@ -22,7 +23,7 @@ const Button:FC<ButtonPropsType> = ({
         callback()
     }
 
-    const errorType = !!error || setButtonIsClicked || isCountEqualsToMaxValue
+    const errorType = error !== '' || buttonIsNotClicked || disableIncButton
 
     return (
         <div className={style.button}>
