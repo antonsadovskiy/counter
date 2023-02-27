@@ -23,8 +23,8 @@ const Display:FC<DisplayPropsType> = (
 
     const display = valuesAreEqual?
         <span>values are equal</span> : error?
-        <span>{error}</span> : isButtonNotClicked?
-            <span>enter values and press set</span> : <span className={spanStyle}>{count}</span>
+            <span>{error}</span> : isButtonNotClicked?
+                <span>enter values and press set</span> : <span className={spanStyle}>{count}</span>
 
     return (
         <div className={s.display}>

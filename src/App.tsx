@@ -10,7 +10,7 @@ export type ErrorState = {
 
 function App() {
 
-    const [maxValue, setMaxValue] = useState<number>(5)
+    const [maxValue, setMaxValue] = useState<number>(0)
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(0)
     const [isButtonNotClicked, setIsButtonNotClicked] = useState<boolean>(true)
@@ -59,7 +59,6 @@ function App() {
     const disableResetButton = count === startValue
     const valuesAreEqual = startValue === maxValue
     const disableSetButton = startValue > maxValue ||
-        maxValue < startValue ||
         startValue === maxValue ||
         maxValue <= 0 || startValue < 0
 
