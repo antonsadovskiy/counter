@@ -1,7 +1,7 @@
 .counterContainer {
     display: flex;
     flex-direction: column;
-    width: 300px;
+    width: 250px;
     padding: 10px;
     border: 1px solid black;
     height: 85px;
@@ -11,6 +11,7 @@
 .display {
     height: 46px;
     padding: 10px;
+    border: 1px solid black;
 }
 .buttonContainer {
     padding: 10px 0 0 0;
