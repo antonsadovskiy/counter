@@ -1,23 +1,23 @@
 import React, {FC} from 'react';
-import style from './Button.module.css'
+import s from './Button.module.css'
 
-type ButtonPropsType = {
+export type ButtonPropsType = {
     name: string
     callback: () => void
-    error: string
-    buttonIsNotClicked?: boolean
     disableIncButton?: boolean
     disableResetButton?: boolean
+    disableSetButton?: boolean
+    isButtonNotClicked: boolean
 }
 
-const Button: FC<ButtonPropsType> = (
+const Button:FC<ButtonPropsType> = (
     {
         name,
         callback,
-        error,
-        buttonIsNotClicked,
         disableIncButton,
-        disableResetButton
+        disableResetButton,
+        disableSetButton,
+        isButtonNotClicked,
     }
 ) => {
 
@@ -25,12 +25,10 @@ const Button: FC<ButtonPropsType> = (
         callback()
     }
 
-    const errorType = error !== '' || buttonIsNotClicked || disableIncButton || disableResetButton
+    const isDisable = disableSetButton || isButtonNotClicked || disableIncButton || disableResetButton
 
     return (
-        <div className={style.button}>
-            <button disabled={errorType} onClick={onClickHandler}>{name}</button>
-        </div>
+        <button className={s.button} disabled={isDisable} onClick={onClickHandler}>{name}</button>
     );
 };
 

@@ -1,9 +1,9 @@
-button{
+.button {
     width: auto;
     height: 25px;
     font-size: 20px;
     border: 1px solid darkslategrey;
-    display: flex;
+    /*display: flex;*/
     align-items: center;
     transition: all 0.3s ease;
     box-shadow: 1px 1px 2px gray;

@@ -1,16 +1,17 @@
 import React, {FC} from 'react';
 import Button from "../Button/Button";
-import style from './Counter.module.css'
+import s from './Counter.module.css'
 import Display from "./Display/Display";
 
-type CounterPropsType = {
+export type CounterPropsType = {
     count: number
     incCounter: () => void
     resetCounter: () => void
-    error: string
-    buttonIsNotClicked: boolean
     disableIncButton: boolean
     disableResetButton: boolean
+    isButtonNotClicked: boolean
+    error: string
+    valuesAreEqual: boolean
 }
 
 const Counter: FC<CounterPropsType> = (
@@ -18,38 +19,37 @@ const Counter: FC<CounterPropsType> = (
         count,
         incCounter,
         resetCounter,
-        error,
-        buttonIsNotClicked,
         disableIncButton,
-        disableResetButton
+        disableResetButton,
+        isButtonNotClicked,
+        error,
+        valuesAreEqual
     }
 ) => {
 
-    const incCounterHandler = () => {
+    const onClickIncHandler = () => {
         incCounter()
     }
-    const resetCounterHandler = () => {
+    const onClickResetHandler = () => {
         resetCounter()
     }
 
     return (
-        <div className={style.counterContainer}>
+        <div className={s.counterContainer}>
             <Display count={count}
+                     isButtonNotClicked={isButtonNotClicked}
+                     disableIncButton={disableIncButton}
                      error={error}
-                     buttonIsNotClicked={buttonIsNotClicked}
-                     disableIncButton={disableIncButton}/>
-            <div className={style.buttonContainer}>
+                     valuesAreEqual={valuesAreEqual}/>
+            <div className={s.buttonContainer}>
                 <Button name={'inc'}
-                        callback={incCounterHandler}
-                        error={error}
-                        buttonIsNotClicked={buttonIsNotClicked}
-                        disableIncButton={disableIncButton}/>
+                        callback={onClickIncHandler}
+                        disableIncButton={disableIncButton}
+                        isButtonNotClicked={isButtonNotClicked}/>
                 <Button name={'reset'}
-                        callback={resetCounterHandler}
-                        error={error}
-                        buttonIsNotClicked={buttonIsNotClicked}
-                        disableResetButton={disableResetButton}/>
-
+                        callback={onClickResetHandler}
+                        disableResetButton={disableResetButton}
+                        isButtonNotClicked={isButtonNotClicked}/>
             </div>
         </div>
     );

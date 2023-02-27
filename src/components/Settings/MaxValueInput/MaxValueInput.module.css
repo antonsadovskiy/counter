@@ -1,19 +1,18 @@
-.maxValueContainer {
+.inputContainer {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 10px;
 }
-.maxValueContainer h3 {
+.inputContainer h3 {
     margin: 0;
 }
-input {
+.input {
     text-align: center;
-    outline: 0;
-    border-radius: 5px;
+    outline: none;
     border: 1px solid black;
+    border-radius: 2px;
 }
 .errorInput {
-    border: 2px solid red;
-    border-radius: 5px;
+    border: 1px solid darkred;
+    background-color: lightcoral;
 }

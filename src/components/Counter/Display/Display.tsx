@@ -1,29 +1,34 @@
 import React, {FC} from 'react';
-import style from './Display.module.css'
+import s from '../Counter.module.css'
 
-type DisplayPropsType = {
+export type DisplayPropsType = {
     count: number
-    error: string
-    buttonIsNotClicked: boolean
     disableIncButton: boolean
+    isButtonNotClicked: boolean
+    error: string
+    valuesAreEqual: boolean
 }
 
-const Display: FC<DisplayPropsType> = (
+const Display:FC<DisplayPropsType> = (
     {
         count,
+        disableIncButton,
+        isButtonNotClicked,
         error,
-        buttonIsNotClicked,
-        disableIncButton
+        valuesAreEqual
     }
 ) => {
 
-    const errorValue = style.display + (!buttonIsNotClicked && disableIncButton ? " " + style.errorValue : "")
+    const spanStyle = s.normal + (disableIncButton? ' ' + s.red : '')
+
+    const display = valuesAreEqual?
+        <span>values are equal</span> : error?
+        <span>{error}</span> : isButtonNotClicked?
+            <span>enter values and press set</span> : <span className={spanStyle}>{count}</span>
 
     return (
-        <div className={style.displayContainer}>
-            <span className={errorValue}>
-                {error ? error : !buttonIsNotClicked ? count : "enter values and press set"}
-            </span>
+        <div className={s.display}>
+            {display}
         </div>
     );
 };
