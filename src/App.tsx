@@ -10,7 +10,7 @@ export type ErrorState = {
 
 function App() {
 
-    const [maxValue, setMaxValue] = useState<number>(0)
+    const [maxValue, setMaxValue] = useState<number>(1)
     const [startValue, setStartValue] = useState<number>(0)
     const [count, setCount] = useState<number>(0)
     const [isButtonNotClicked, setIsButtonNotClicked] = useState<boolean>(true)

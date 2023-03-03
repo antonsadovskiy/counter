@@ -1,4 +1,4 @@
-import React, {FC, useState} from 'react';
+import React, {FC} from 'react';
 import MaxValueInput from "./MaxValueInput/MaxValueInput";
 import StartValueInput from "./StartValueInput/StartValueInput";
 import s from './Settings.module.css'

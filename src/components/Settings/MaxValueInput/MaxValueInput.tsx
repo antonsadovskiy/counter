@@ -18,7 +18,7 @@ const MaxValueInput: FC<MaxValueInputPropsType> = (
         startValue,
         defineError,
         inputError,
-        setInputError
+        setInputError,
     }
 ) => {
 
