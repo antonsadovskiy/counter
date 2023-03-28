@@ -1,14 +1,13 @@
 import React, {ChangeEvent, FC} from 'react';
 import s from './StartValueInput.module.css'
-import {ErrorState} from "../../../App";
-import {setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
+import {InputErrorType, setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
 import {useDispatch} from "react-redux";
 
 export type StartValueInputPropsType = {
     startValue: number
     changeStartValue: (value: number) => void
     maxValue: number
-    inputError: ErrorState
+    inputError: InputErrorType
 }
 
 const StartValueInput:FC<StartValueInputPropsType> = (
