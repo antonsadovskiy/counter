@@ -1,45 +1,37 @@
-import {ValuesType} from "../../App";
-
-export type ChangeMaxValueActionType = ReturnType<typeof changeMaxValueAC>
-export type ChangeStartValueActionType = ReturnType<typeof changeStartValueAC>
+export type SetCounterValueActionType = ReturnType<typeof setCounterValueAC>
 export type SetStartAsCountActionType = ReturnType<typeof setStartAsCountAC>
 export type IncCounterActionType = ReturnType<typeof incCounterAC>
 export type ResetCounterActionType = ReturnType<typeof resetCounterAC>
 
-export type ActionsType = ChangeMaxValueActionType
-    | ChangeStartValueActionType | SetStartAsCountActionType
-    | ResetCounterActionType| IncCounterActionType
+export type ActionsType = SetCounterValueActionType | SetStartAsCountActionType | ResetCounterActionType| IncCounterActionType
 
-export const counterReducer = (state: ValuesType, action: ActionsType): ValuesType => {
+export type CounterStateType = {
+    counterValue: number
+}
+const initialState: CounterStateType = {
+    counterValue: 0
+}
+
+export const counterReducer = (state: CounterStateType = initialState, action: ActionsType): CounterStateType => {
     switch (action.type) {
-        case "CHANGE-MAX-VALUE":
-            return {...state, maxValue: action.payload.maxValue}
-        case "CHANGE-START-VALUE":
-            return {...state, startValue: action.payload.startValue}
+        case "SET-COUNTER-VALUE":
+            return {...state, counterValue: action.payload.counterValue}
         case "SET-START-AS-COUNT":
             return {...state, counterValue: action.payload.startValue}
         case 'INC-COUNTER':
             return {...state, counterValue: state.counterValue + 1}
         case "RESET-COUNTER":
-            return {...state, counterValue: state.startValue}
+            return {...state, counterValue: action.payload.startValue}
         default:
             return state
     }
 }
 
-export const changeMaxValueAC = (maxValue: number) => {
+export const setCounterValueAC = (counterValue: number) => {
     return ({
-        type: 'CHANGE-MAX-VALUE',
+        type: 'SET-COUNTER-VALUE',
         payload: {
-            maxValue
-        }
-    }) as const
-}
-export const changeStartValueAC = (startValue: number) => {
-    return ({
-        type: 'CHANGE-START-VALUE',
-        payload: {
-            startValue
+            counterValue
         }
     }) as const
 }
@@ -56,8 +48,11 @@ export const incCounterAC = () => {
         type: 'INC-COUNTER'
     }) as const
 }
-export const resetCounterAC = () => {
+export const resetCounterAC = (startValue: number) => {
     return ({
-        type: 'RESET-COUNTER'
+        type: 'RESET-COUNTER',
+        payload: {
+            startValue
+        }
     }) as const
 }

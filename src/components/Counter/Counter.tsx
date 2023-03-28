@@ -2,11 +2,12 @@ import React, {FC} from 'react';
 import Button from "../Button/Button";
 import s from './Counter.module.css'
 import Display from "./Display/Display";
+import {useDispatch} from "react-redux";
+import {incCounterAC, resetCounterAC} from "../../redux/counter/counterReducer";
 
 export type CounterPropsType = {
     count: number
-    incCounter: () => void
-    resetCounter: () => void
+    startValue: number
     disableIncButton: boolean
     disableResetButton: boolean
     isButtonNotClicked: boolean
@@ -17,8 +18,7 @@ export type CounterPropsType = {
 const Counter: FC<CounterPropsType> = (
     {
         count,
-        incCounter,
-        resetCounter,
+        startValue,
         disableIncButton,
         disableResetButton,
         isButtonNotClicked,
@@ -27,12 +27,9 @@ const Counter: FC<CounterPropsType> = (
     }
 ) => {
 
-    const onClickIncHandler = () => {
-        incCounter()
-    }
-    const onClickResetHandler = () => {
-        resetCounter()
-    }
+    const dispatch = useDispatch()
+    const incCounter = () => dispatch(incCounterAC())
+    const resetCounter = () => dispatch(resetCounterAC(startValue))
 
     return (
         <div className={s.counterContainer}>
@@ -43,11 +40,11 @@ const Counter: FC<CounterPropsType> = (
                      valuesAreEqual={valuesAreEqual}/>
             <div className={s.buttonContainer}>
                 <Button name={'inc'}
-                        callback={onClickIncHandler}
+                        callback={incCounter}
                         disableIncButton={disableIncButton}
                         isButtonNotClicked={isButtonNotClicked}/>
                 <Button name={'reset'}
-                        callback={onClickResetHandler}
+                        callback={resetCounter}
                         disableResetButton={disableResetButton}
                         isButtonNotClicked={isButtonNotClicked}/>
             </div>

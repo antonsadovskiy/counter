@@ -1,14 +1,14 @@
 import React, {ChangeEvent, FC} from 'react';
 import s from './MaxValueInput.module.css'
 import {ErrorState} from "../../../App";
+import {useDispatch} from "react-redux";
+import {setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
 
 export type MaxValueInputPropsType = {
     maxValue: number
     changeMaxValue: (value: number) => void
     startValue: number
-    defineError: (value: string) => void
     inputError: ErrorState
-    setInputError: (errState: ErrorState) => void
 }
 
 const MaxValueInput: FC<MaxValueInputPropsType> = (
@@ -16,12 +16,11 @@ const MaxValueInput: FC<MaxValueInputPropsType> = (
         maxValue,
         changeMaxValue,
         startValue,
-        defineError,
         inputError,
-        setInputError,
     }
 ) => {
 
+    const dispatch = useDispatch()
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const maxValue = Number(e.currentTarget.value)
@@ -31,16 +30,16 @@ const MaxValueInput: FC<MaxValueInputPropsType> = (
 
     const trackError = (max: number, start: number) => {
         if (max < start){
-            defineError('max value lower than start')
-            setInputError({...inputError, max: true, min: false})
+            dispatch(setErrorAC('max value lower than start'))
+            dispatch(setInputErrorAC({min: false, max: true}))
         } else if (max < 0){
-            defineError('max value must be positive')
-            setInputError({...inputError, max: true, min: false})
+            dispatch(setErrorAC('max value must be positive'))
+            dispatch(setInputErrorAC({min: false, max: true}))
         } else if (start === max){
-            setInputError({...inputError, max: true, min: true})
+            dispatch(setInputErrorAC({min: true, max: true}))
         } else {
-            defineError('')
-            setInputError({...inputError, max: false, min: false})
+            dispatch(setErrorAC(''))
+            dispatch(setInputErrorAC({min: false, max: false}))
         }
     }
 

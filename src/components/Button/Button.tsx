@@ -21,14 +21,10 @@ const Button:FC<ButtonPropsType> = (
     }
 ) => {
 
-    const onClickHandler = () => {
-        callback()
-    }
-
     const isDisable = disableSetButton || isButtonNotClicked || disableIncButton || disableResetButton
 
     return (
-        <button className={s.button} disabled={isDisable} onClick={onClickHandler}>{name}</button>
+        <button className={s.button} disabled={isDisable} onClick={callback}>{name}</button>
     );
 };
 

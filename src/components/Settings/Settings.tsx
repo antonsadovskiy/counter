@@ -3,58 +3,54 @@ import MaxValueInput from "./MaxValueInput/MaxValueInput";
 import StartValueInput from "./StartValueInput/StartValueInput";
 import s from './Settings.module.css'
 import Button from "../Button/Button";
-import {ErrorState} from "../../App";
+import {changeSettingsValueAC, SettingsStateType} from "../../redux/settings/settingsReducer";
+import {useDispatch} from "react-redux";
+import {setStartAsCountAC} from "../../redux/counter/counterReducer";
+import {ErrorsStateType, setIsButtonNotClickedAC} from "../../redux/errors/errorsReducer";
 
 export type SettingPropsType = {
-    maxValue: number
-    changeMaxValue: (value: number) => void
-    startValue: number
-    changeStartValue: (value: number) => void
-    setStartAsCount: () => void
-    isButtonNotClicked: boolean
+    settings: SettingsStateType
+    errors: ErrorsStateType
     disableSetButton: boolean
-    defineError: (value: string) => void
-    inputError: ErrorState
-    setInputError: (errState: ErrorState) => void
 }
 
 const Settings:FC<SettingPropsType> = (
     {
-        maxValue,
-        changeMaxValue,
-        startValue,
-        changeStartValue,
-        setStartAsCount,
-        isButtonNotClicked,
+        settings,
+        errors,
         disableSetButton,
-        defineError,
-        inputError,
-        setInputError
     }
 ) => {
 
-    const onClickSetHandler = () => {
-        setStartAsCount()
+    const dispatch = useDispatch()
+
+    const changeMaxValue = (value: number) => {
+        dispatch(changeSettingsValueAC('maxValue', value))
+        dispatch(setIsButtonNotClickedAC(true))
+    }
+    const changeStartValue = (value: number) => {
+        dispatch(changeSettingsValueAC('startValue', value))
+        dispatch(setIsButtonNotClickedAC(true))
+    }
+    const setStartAsCount = () => {
+        dispatch(setStartAsCountAC(settings.startValue))
+        dispatch(setIsButtonNotClickedAC(false))
     }
 
     return (
         <div className={s.settingsContainer}>
-            <MaxValueInput maxValue={maxValue}
+            <MaxValueInput maxValue={settings.maxValue}
                            changeMaxValue={changeMaxValue}
-                           startValue={startValue}
-                           defineError={defineError}
-                           inputError={inputError}
-                           setInputError={setInputError}/>
-            <StartValueInput startValue={startValue}
+                           startValue={settings.startValue}
+                           inputError={errors.inputError}/>
+            <StartValueInput startValue={settings.startValue}
                              changeStartValue={changeStartValue}
-                             maxValue={maxValue}
-                             defineError={defineError}
-                             inputError={inputError}
-                             setInputError={setInputError}/>
+                             maxValue={settings.maxValue}
+                             inputError={errors.inputError}/>
             <div className={s.buttonContainer}>
                 <Button name={'set'}
-                        callback={onClickSetHandler}
-                        isButtonNotClicked={!isButtonNotClicked}
+                        callback={setStartAsCount}
+                        isButtonNotClicked={!errors.isButtonNotClicked}
                         disableSetButton={disableSetButton}/>
             </div>
         </div>

@@ -1,14 +1,14 @@
 import React, {ChangeEvent, FC} from 'react';
 import s from './StartValueInput.module.css'
 import {ErrorState} from "../../../App";
+import {setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
+import {useDispatch} from "react-redux";
 
 export type StartValueInputPropsType = {
     startValue: number
     changeStartValue: (value: number) => void
     maxValue: number
-    defineError: (value: string) => void
     inputError: ErrorState
-    setInputError: (errState: ErrorState) => void
 }
 
 const StartValueInput:FC<StartValueInputPropsType> = (
@@ -16,11 +16,11 @@ const StartValueInput:FC<StartValueInputPropsType> = (
         startValue,
         changeStartValue,
         maxValue,
-        defineError,
-        inputError,
-        setInputError
+        inputError
     }
 ) => {
+
+    const dispatch = useDispatch()
 
     const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         const startValue = Number(e.currentTarget.value)
@@ -30,16 +30,16 @@ const StartValueInput:FC<StartValueInputPropsType> = (
 
     const trackError = (start: number, max: number) => {
         if (start > max){
-            defineError('start value more than max')
-            setInputError({...inputError, min: true, max: false})
+            dispatch(setErrorAC('start value more than max'))
+            dispatch(setInputErrorAC({min: true, max: false}))
         } else if (start < 0){
-            defineError('start value must be positive')
-            setInputError({...inputError, min: true, max: false})
+            dispatch(setErrorAC('start value must be positive'))
+            dispatch(setInputErrorAC({min: true, max: false}))
         } else if (start === max){
-            setInputError({...inputError, min: true, max: true})
+            dispatch(setInputErrorAC({min: true, max: true}))
         } else {
-            defineError('')
-            setInputError({...inputError, min: false, max: false})
+            dispatch(setErrorAC(''))
+            dispatch(setInputErrorAC({min: false, max: false}))
         }
     }
 
