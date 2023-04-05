@@ -5,6 +5,17 @@ export type SettingsStateType = {
     maxValue: number,
     startValue: number
 }
+
+const getMaxValueFromLS = () => {
+    const maxValue = localStorage.getItem('maxValue')
+    return maxValue ? JSON.parse(maxValue ?? '') : 0
+}
+const getStartValueFromLS = () => {
+    const startValue = localStorage.getItem('startValue')
+    return startValue ? JSON.parse(startValue ?? '') : 0
+}
+
+
 const initialState: SettingsStateType = {
     maxValue: 1,
     startValue: 0

@@ -1,32 +1,21 @@
 import React from 'react';
 import './App.css';
-import Counter from "./components/Counter/Counter";
-import Settings from "./components/Settings/Settings";
-import {CounterStateType} from "./redux/counter/counterReducer";
-import {SettingsStateType} from "./redux/settings/settingsReducer";
 import {useSelector} from "react-redux";
 import {AppStoreType} from "./redux/store/store";
-import {ErrorsStateType} from "./redux/errors/errorsReducer";
+import {InputErrorType} from "./redux/errors/errorsReducer";
+import SettingsMemo from './components/Settings/Settings';
+import CounterMemo from "./components/Counter/Counter";
 
 function App() {
 
-    const settings = useSelector<AppStoreType, SettingsStateType>(state => state.settings)
-    const counter = useSelector<AppStoreType, CounterStateType>(state => state.counter)
-    const errors = useSelector<AppStoreType, ErrorsStateType>(state => state.errors)
+    const maxValue = useSelector<AppStoreType, number>(state => state.settings.maxValue)
+    const startValue = useSelector<AppStoreType, number>(state => state.settings.startValue)
+    const counterValue = useSelector<AppStoreType, number>(state => state.counter.counterValue)
+    const isButtonNotClicked = useSelector<AppStoreType, boolean>(state => state.errors.isButtonNotClicked)
+    const error = useSelector<AppStoreType, string>(state => state.errors.error)
+    const inputError = useSelector<AppStoreType, InputErrorType>(state => state.errors.inputError)
 
     // useEffect(() => {
-    //     const maxValue = localStorage.getItem('maxValue')
-    //     if (maxValue) {
-    //         dispatch(changeSettingsValueAC('maxValue', JSON.parse(maxValue)))
-    //     }
-    //     const startValue = localStorage.getItem('startValue')
-    //     if (startValue) {
-    //         dispatch(changeSettingsValueAC('startValue', JSON.parse(startValue)))
-    //     }
-    //     const counterValue = localStorage.getItem('counterValue')
-    //     if (counterValue) {
-    //         dispatch(setCounterValueAC(JSON.parse(counterValue)))
-    //     }
     //     const isButtonNotClicked = localStorage.getItem('isButtonNotClicked')
     //     if (isButtonNotClicked) {
     //         dispatch(setIsButtonNotClickedAC(JSON.parse(isButtonNotClicked)))
@@ -41,38 +30,36 @@ function App() {
     //     }
     // }, [])
     // useEffect(() => {
-    //     localStorage.setItem('maxValue', JSON.stringify(settings.maxValue))
-    //     localStorage.setItem('startValue', JSON.stringify(settings.startValue))
-    //     localStorage.setItem('counterValue', JSON.stringify(counter.counterValue))
-    //     localStorage.setItem('isButtonNotClicked', JSON.stringify(errors.isButtonNotClicked))
-    //     localStorage.setItem('error', errors.error)
-    //     localStorage.setItem('inputError', JSON.stringify(errors.inputError))
-    // }, [settings.maxValue, settings.startValue, counter.counterValue, errors.isButtonNotClicked, errors.error, errors.inputError])
+    //     localStorage.setItem('isButtonNotClicked', JSON.stringify(isButtonNotClicked))
+    //     localStorage.setItem('error', error)
+    //     localStorage.setItem('inputError', JSON.stringify(inputError))
+    // }, [isButtonNotClicked, error, inputError])
 
-    const checkDisableCounter = (value: number) => counter.counterValue === value
-    const checkAreEqual = (settings: SettingsStateType) => settings.startValue === settings.maxValue;
-    const checkDisableSettings = (settings: SettingsStateType) => {
-        return settings.startValue > settings.maxValue || checkAreEqual(settings) ||
-            settings.maxValue <= 0 || settings.startValue < 0
+    const checkDisableCounter = (value: number) => counterValue === value
+    const checkAreEqual = (maxValue: number, startValue: number) => startValue === maxValue;
+    const checkDisableSettings = (maxValue: number, startValue: number) => {
+        return startValue > maxValue || checkAreEqual(maxValue, startValue) ||
+            maxValue <= 0 || startValue < 0
     }
 
-    const disableIncButton = checkDisableCounter(settings.maxValue);
-    const disableResetButton = checkDisableCounter(settings.startValue);
-    const valuesAreEqual = checkAreEqual(settings);
-    const disableSetButton = checkDisableSettings(settings);
+    const disableIncButton = checkDisableCounter(maxValue);
+    const disableResetButton = checkDisableCounter(startValue);
+    const valuesAreEqual = checkAreEqual(maxValue, startValue);
+    const disableSetButton = checkDisableSettings(maxValue, startValue);
 
     return (
         <div className="App">
-            <Settings settings={settings}
-                      errors={errors}
-                      disableSetButton={disableSetButton}/>
-            <Counter count={counter.counterValue}
-                     startValue={settings.startValue}
-                     disableIncButton={disableIncButton}
-                     disableResetButton={disableResetButton}
-                     valuesAreEqual={valuesAreEqual}
-                     isButtonNotClicked={errors.isButtonNotClicked}
-                     error={errors.error}/>
+            <SettingsMemo maxValue={maxValue}
+                          startValue={startValue}
+                          isButtonNotClicked={isButtonNotClicked}
+                          inputError={inputError}
+                          disableSetButton={disableSetButton}/>
+            <CounterMemo startValue={startValue}
+                         disableIncButton={disableIncButton}
+                         disableResetButton={disableResetButton}
+                         valuesAreEqual={valuesAreEqual}
+                         isButtonNotClicked={isButtonNotClicked}
+                         error={error}/>
         </div>
     );
 }
