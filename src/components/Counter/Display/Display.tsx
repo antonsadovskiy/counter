@@ -9,7 +9,7 @@ export type DisplayPropsType = {
     valuesAreEqual: boolean
 }
 
-const Display:FC<DisplayPropsType> = (
+const Display: FC<DisplayPropsType> = React.memo((
     {
         count,
         disableIncButton,
@@ -19,18 +19,22 @@ const Display:FC<DisplayPropsType> = (
     }
 ) => {
 
-    const spanStyle = s.normal + (disableIncButton? ' ' + s.red : '')
+    const spanStyle = s.normal + (disableIncButton ? ' ' + s.red : '')
 
-    const display = valuesAreEqual?
-        <span>values are equal</span> : error?
-            <span>{error}</span> : isButtonNotClicked?
+    const display = valuesAreEqual ?
+        <span>values are equal</span> : error ?
+            <span>{error}</span> : isButtonNotClicked ?
                 <span>enter values and press set</span> : <span className={spanStyle}>{count}</span>
 
     return (
         <div className={s.display}>
             {display}
         </div>
+        // <TextField
+        //     label="Required"
+        //     value={display}
+        // />
     );
-};
+});
 
 export default Display;

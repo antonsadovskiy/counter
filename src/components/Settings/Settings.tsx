@@ -1,12 +1,12 @@
-import React, {FC, useCallback, useEffect} from 'react';
+import React, {FC, useCallback} from 'react';
 import MaxValueInput from "./MaxValueInput/MaxValueInput";
 import StartValueInput from "./StartValueInput/StartValueInput";
 import s from './Settings.module.css'
-import Button from "../Button/Button";
 import {changeSettingsValueAC} from "../../redux/settings/settingsReducer";
 import {useDispatch} from "react-redux";
 import {setStartAsCountAC} from "../../redux/counter/counterReducer";
 import {InputErrorType, setIsButtonNotClickedAC} from "../../redux/errors/errorsReducer";
+import MyButton from "../Button/Button";
 
 export type SettingPropsType = {
     maxValue: number
@@ -16,7 +16,7 @@ export type SettingPropsType = {
     disableSetButton: boolean
 }
 
-const Settings:FC<SettingPropsType> = (
+const Settings:FC<SettingPropsType> = React.memo((
     {
         maxValue,
         startValue,
@@ -28,18 +28,18 @@ const Settings:FC<SettingPropsType> = (
 
     const dispatch = useDispatch()
 
-    const changeMaxValue = (value: number) => {
-        dispatch(changeSettingsValueAC('maxValue', value))
+    const changeMaxValue = useCallback((value: number) => {
+        dispatch(changeSettingsValueAC('maxValue', Math.floor(value)))
         dispatch(setIsButtonNotClickedAC(true))
-    }
-    const changeStartValue = (value: number) => {
-        dispatch(changeSettingsValueAC('startValue', value))
+    }, [dispatch])
+    const changeStartValue = useCallback((value: number) => {
+        dispatch(changeSettingsValueAC('startValue', Math.floor(value)))
         dispatch(setIsButtonNotClickedAC(true))
-    }
-    const setStartAsCount = () => {
+    }, [dispatch])
+    const setStartAsCount = useCallback(() => {
         dispatch(setStartAsCountAC(startValue))
         dispatch(setIsButtonNotClickedAC(false))
-    }
+    }, [dispatch, startValue])
 
     // useEffect(() => {
     //     localStorage.setItem('maxValue', JSON.stringify(maxValue))
@@ -57,14 +57,13 @@ const Settings:FC<SettingPropsType> = (
                              maxValue={maxValue}
                              inputError={inputError}/>
             <div className={s.buttonContainer}>
-                <Button name={'set'}
+                <MyButton name={'set'}
                         callback={setStartAsCount}
                         isButtonNotClicked={!isButtonNotClicked}
                         disableSetButton={disableSetButton}/>
             </div>
         </div>
     );
-};
+});
 
-const SettingsMemo = React.memo(Settings)
-export default SettingsMemo;
+export default Settings;

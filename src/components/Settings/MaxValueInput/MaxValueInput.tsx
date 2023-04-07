@@ -2,6 +2,7 @@ import React, {ChangeEvent, FC} from 'react';
 import s from './MaxValueInput.module.css'
 import {useDispatch} from "react-redux";
 import {InputErrorType, setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
+import {TextField} from "@mui/material";
 
 export type MaxValueInputPropsType = {
     maxValue: number
@@ -10,7 +11,7 @@ export type MaxValueInputPropsType = {
     inputError: InputErrorType
 }
 
-const MaxValueInput: FC<MaxValueInputPropsType> = (
+const MaxValueInput: FC<MaxValueInputPropsType> = React.memo((
     {
         maxValue,
         changeMaxValue,
@@ -42,18 +43,17 @@ const MaxValueInput: FC<MaxValueInputPropsType> = (
         }
     }
 
-    const inputClass = s.input + (inputError.max? ' ' + s.errorInput : '')
-
     return (
         <div className={s.inputContainer}>
-            <h3>max value: </h3>
-            <input className={inputClass}
-                   type="number"
-                   value={maxValue}
-                   onChange={onChangeHandler}/>
+            <TextField error={inputError.max}
+                       size={'small'}
+                       label="max value"
+                       type="number"
+                       value={maxValue}
+                       onChange={onChangeHandler}/>
         </div>
 )
     ;
-};
+});
 
 export default MaxValueInput;

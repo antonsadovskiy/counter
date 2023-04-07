@@ -2,6 +2,7 @@ import React, {ChangeEvent, FC} from 'react';
 import s from './StartValueInput.module.css'
 import {InputErrorType, setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
 import {useDispatch} from "react-redux";
+import {TextField} from "@mui/material";
 
 export type StartValueInputPropsType = {
     startValue: number
@@ -10,7 +11,7 @@ export type StartValueInputPropsType = {
     inputError: InputErrorType
 }
 
-const StartValueInput:FC<StartValueInputPropsType> = (
+const StartValueInput: FC<StartValueInputPropsType> = React.memo((
     {
         startValue,
         changeStartValue,
@@ -28,13 +29,13 @@ const StartValueInput:FC<StartValueInputPropsType> = (
     }
 
     const trackError = (start: number, max: number) => {
-        if (start > max){
+        if (start > max) {
             dispatch(setErrorAC('start value more than max'))
             dispatch(setInputErrorAC({min: true, max: false}))
-        } else if (start < 0){
+        } else if (start < 0) {
             dispatch(setErrorAC('start value must be positive'))
             dispatch(setInputErrorAC({min: true, max: false}))
-        } else if (start === max){
+        } else if (start === max) {
             dispatch(setInputErrorAC({min: true, max: true}))
         } else {
             dispatch(setErrorAC(''))
@@ -42,14 +43,16 @@ const StartValueInput:FC<StartValueInputPropsType> = (
         }
     }
 
-    const inputClass = s.input + (inputError.min? ' ' + s.errorInput : '')
-
     return (
         <div className={s.inputContainer}>
-            <h3>start value: </h3>
-            <input className={inputClass} type="number" value={startValue} onChange={onChangeHandler} />
+            <TextField error={inputError.min}
+                       size={'small'}
+                       label="start value"
+                       type="number"
+                       value={startValue}
+                       onChange={onChangeHandler}/>
         </div>
     );
-};
+});
 
 export default StartValueInput;

@@ -1,17 +1,21 @@
 .counterContainer {
     display: flex;
     flex-direction: column;
+    justify-content: space-between;
     width: 250px;
     padding: 10px;
-    border: 1px solid black;
-    height: 85px;
+    height: 126px;
     box-shadow: 1px 1px 2px darkslategrey;
 }
 
 .display {
-    height: 46px;
+    height: 100%;
     padding: 10px;
-    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #eaeaea;
+    border-radius: 5px;
 }
 .buttonContainer {
     padding: 10px 0 0 0;

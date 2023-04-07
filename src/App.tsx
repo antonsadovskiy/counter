@@ -1,10 +1,10 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import './App.css';
 import {useSelector} from "react-redux";
 import {AppStoreType} from "./redux/store/store";
 import {InputErrorType} from "./redux/errors/errorsReducer";
-import SettingsMemo from './components/Settings/Settings';
-import CounterMemo from "./components/Counter/Counter";
+import Settings from "./components/Settings/Settings";
+import Counter from "./components/Counter/Counter";
 
 function App() {
 
@@ -35,12 +35,12 @@ function App() {
     //     localStorage.setItem('inputError', JSON.stringify(inputError))
     // }, [isButtonNotClicked, error, inputError])
 
-    const checkDisableCounter = (value: number) => counterValue === value
-    const checkAreEqual = (maxValue: number, startValue: number) => startValue === maxValue;
-    const checkDisableSettings = (maxValue: number, startValue: number) => {
+    const checkDisableCounter = useCallback((value: number) => counterValue === value, [counterValue])
+    const checkAreEqual = useCallback((maxValue: number, startValue: number) => startValue === maxValue, [])
+    const checkDisableSettings = useCallback((maxValue: number, startValue: number) => {
         return startValue > maxValue || checkAreEqual(maxValue, startValue) ||
             maxValue <= 0 || startValue < 0
-    }
+    }, [checkAreEqual])
 
     const disableIncButton = checkDisableCounter(maxValue);
     const disableResetButton = checkDisableCounter(startValue);
@@ -49,17 +49,18 @@ function App() {
 
     return (
         <div className="App">
-            <SettingsMemo maxValue={maxValue}
-                          startValue={startValue}
-                          isButtonNotClicked={isButtonNotClicked}
-                          inputError={inputError}
-                          disableSetButton={disableSetButton}/>
-            <CounterMemo startValue={startValue}
-                         disableIncButton={disableIncButton}
-                         disableResetButton={disableResetButton}
-                         valuesAreEqual={valuesAreEqual}
-                         isButtonNotClicked={isButtonNotClicked}
-                         error={error}/>
+            <Settings maxValue={maxValue}
+                      startValue={startValue}
+                      isButtonNotClicked={isButtonNotClicked}
+                      inputError={inputError}
+                      disableSetButton={disableSetButton}/>
+            <Counter count={counterValue}
+                     startValue={startValue}
+                     disableIncButton={disableIncButton}
+                     disableResetButton={disableResetButton}
+                     valuesAreEqual={valuesAreEqual}
+                     isButtonNotClicked={isButtonNotClicked}
+                     error={error}/>
         </div>
     );
 }

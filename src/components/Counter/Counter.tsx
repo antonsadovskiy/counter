@@ -1,13 +1,12 @@
-import React, {FC, useEffect} from 'react';
-import Button from "../Button/Button";
+import React, {FC} from 'react';
 import s from './Counter.module.css'
 import Display from "./Display/Display";
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {incCounterAC, resetCounterAC} from "../../redux/counter/counterReducer";
-import {AppStoreType} from "../../redux/store/store";
+import MyButton from "../Button/Button";
 
 export type CounterPropsType = {
-    // count: number
+    count: number
     startValue: number
     disableIncButton: boolean
     disableResetButton: boolean
@@ -16,9 +15,9 @@ export type CounterPropsType = {
     valuesAreEqual: boolean
 }
 
-const Counter: FC<CounterPropsType> = (
+const Counter: FC<CounterPropsType> = React.memo((
     {
-        // count,
+        count,
         startValue,
         disableIncButton,
         disableResetButton,
@@ -29,10 +28,9 @@ const Counter: FC<CounterPropsType> = (
 ) => {
 
     const dispatch = useDispatch()
+
     const incCounter = () => dispatch(incCounterAC())
     const resetCounter = () => dispatch(resetCounterAC(startValue))
-
-    const counterValue = useSelector<AppStoreType, number>(state => state.counter.counterValue)
 
     // useEffect(() => {
     //     localStorage.setItem('counterValue', JSON.stringify(count))
@@ -40,24 +38,23 @@ const Counter: FC<CounterPropsType> = (
 
     return (
         <div className={s.counterContainer}>
-            <Display count={counterValue}
+            <Display count={count}
                      isButtonNotClicked={isButtonNotClicked}
                      disableIncButton={disableIncButton}
                      error={error}
                      valuesAreEqual={valuesAreEqual}/>
             <div className={s.buttonContainer}>
-                <Button name={'inc'}
-                        callback={incCounter}
-                        disableIncButton={disableIncButton}
-                        isButtonNotClicked={isButtonNotClicked}/>
-                <Button name={'reset'}
-                        callback={resetCounter}
-                        disableResetButton={disableResetButton}
-                        isButtonNotClicked={isButtonNotClicked}/>
+                <MyButton name={'inc'}
+                          callback={incCounter}
+                          disableIncButton={disableIncButton}
+                          isButtonNotClicked={isButtonNotClicked}/>
+                <MyButton name={'reset'}
+                          callback={resetCounter}
+                          disableResetButton={disableResetButton}
+                          isButtonNotClicked={isButtonNotClicked}/>
             </div>
         </div>
     );
-};
+});
 
-const CounterMemo = React.memo(Counter)
-export default CounterMemo;
+export default Counter;
