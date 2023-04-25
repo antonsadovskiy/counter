@@ -1,5 +1,5 @@
 import React, {ChangeEvent, FC} from 'react';
-import s from './StartValueInput.module.css'
+import s from '../Input.module.css'
 import {InputErrorType, setErrorAC, setInputErrorAC} from "../../../redux/errors/errorsReducer";
 import {useDispatch} from "react-redux";
 import {TextField} from "@mui/material";
@@ -46,7 +46,7 @@ const StartValueInput: FC<StartValueInputPropsType> = React.memo((
     return (
         <div className={s.inputContainer}>
             <TextField error={inputError.min}
-                       size={'small'}
+                       size={'medium'}
                        label="start value"
                        type="number"
                        value={startValue}

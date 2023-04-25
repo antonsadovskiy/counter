@@ -32,9 +32,6 @@ const Counter: FC<CounterPropsType> = React.memo((
     const incCounter = () => dispatch(incCounterAC())
     const resetCounter = () => dispatch(resetCounterAC(startValue))
 
-    // useEffect(() => {
-    //     localStorage.setItem('counterValue', JSON.stringify(count))
-    // }, [count])
 
     return (
         <div className={s.counterContainer}>

@@ -48,14 +48,16 @@ const Settings:FC<SettingPropsType> = React.memo((
 
     return (
         <div className={s.settingsContainer}>
-            <MaxValueInput maxValue={maxValue}
-                           changeMaxValue={changeMaxValue}
-                           startValue={startValue}
-                           inputError={inputError}/>
-            <StartValueInput startValue={startValue}
-                             changeStartValue={changeStartValue}
-                             maxValue={maxValue}
-                             inputError={inputError}/>
+            <div className={s.inputsContainer}>
+                <MaxValueInput maxValue={maxValue}
+                              changeMaxValue={changeMaxValue}
+                              startValue={startValue}
+                              inputError={inputError}/>
+                <StartValueInput startValue={startValue}
+                                 changeStartValue={changeStartValue}
+                                 maxValue={maxValue}
+                                 inputError={inputError}/>
+            </div>
             <div className={s.buttonContainer}>
                 <MyButton name={'set'}
                         callback={setStartAsCount}
