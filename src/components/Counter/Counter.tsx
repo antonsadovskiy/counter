@@ -1,17 +1,17 @@
 import React, {FC} from 'react';
 import s from './Counter.module.css'
 import Display from "./Display/Display";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {incCounterAC, resetCounterAC} from "../../redux/counter/counterReducer";
 import MyButton from "../Button/Button";
+import {AppStateType} from "../../redux/store/store";
 
-export type CounterPropsType = {
+type CounterPropsType = {
     count: number
     startValue: number
     disableIncButton: boolean
     disableResetButton: boolean
     isButtonNotClicked: boolean
-    error: string
     valuesAreEqual: boolean
 }
 
@@ -22,16 +22,15 @@ const Counter: FC<CounterPropsType> = React.memo((
         disableIncButton,
         disableResetButton,
         isButtonNotClicked,
-        error,
         valuesAreEqual
     }
 ) => {
 
     const dispatch = useDispatch()
+    const error = useSelector<AppStateType, string>(state => state.errors.error)
 
     const incCounter = () => dispatch(incCounterAC())
     const resetCounter = () => dispatch(resetCounterAC(startValue))
-
 
     return (
         <div className={s.counterContainer}>

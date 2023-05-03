@@ -1,19 +1,11 @@
-export type SetStartAsCountActionType = ReturnType<typeof setStartAsCountAC>
-export type IncCounterActionType = ReturnType<typeof incCounterAC>
-export type ResetCounterActionType = ReturnType<typeof resetCounterAC>
+type SetStartAsCountAT = ReturnType<typeof setStartAsCountAC>
+type IncCounterAT = ReturnType<typeof incCounterAC>
+type ResetCounterAT = ReturnType<typeof resetCounterAC>
 
-export type ActionsType =
-    | SetStartAsCountActionType
-    | ResetCounterActionType
-    | IncCounterActionType
+type ActionsType = SetStartAsCountAT | IncCounterAT | ResetCounterAT
 
 export type CounterStateType = {
     counterValue: number
-}
-
-const getCountFromLS = () => {
-    const count = localStorage.getItem('counterValue')
-    return count ? JSON.parse(count ?? '') : 0
 }
 
 const initialState: CounterStateType = {
@@ -32,24 +24,25 @@ export const counterReducer = (state: CounterStateType = initialState, action: A
             return state
     }
 }
+
 export const setStartAsCountAC = (startValue: number) => {
-    return ({
+    return {
         type: 'SET-START-AS-COUNT',
         payload: {
             startValue
         }
-    }) as const
+    } as const
 }
 export const incCounterAC = () => {
-    return ({
+    return {
         type: 'INC-COUNTER'
-    }) as const
+    } as const
 }
 export const resetCounterAC = (startValue: number) => {
-    return ({
+    return {
         type: 'RESET-COUNTER',
         payload: {
             startValue
         }
-    }) as const
+    } as const
 }

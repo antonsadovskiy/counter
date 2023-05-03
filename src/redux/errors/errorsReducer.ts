@@ -1,8 +1,8 @@
-type SetIsButtonNotClickedActionType = ReturnType<typeof setIsButtonNotClickedAC>
-type SetErrorActionType = ReturnType<typeof setErrorAC>
-type SetInputErrorActionType = ReturnType<typeof setInputErrorAC>
+type SetIsButtonNotClickedAT = ReturnType<typeof setIsButtonNotClickedAC>
+type SetErrorAT = ReturnType<typeof setErrorAC>
+type SetInputErrorAT = ReturnType<typeof setInputErrorAC>
 
-type ActionsType = SetIsButtonNotClickedActionType | SetErrorActionType | SetInputErrorActionType
+type ActionsType = SetIsButtonNotClickedAT | SetErrorAT | SetInputErrorAT
 
 export type InputErrorType = {
     min: boolean
@@ -26,11 +26,14 @@ const initialState: ErrorsStateType = {
 export const errorsReducer = (state: ErrorsStateType = initialState, action: ActionsType): ErrorsStateType => {
     switch (action.type) {
         case "SET-IS-BUTTON-NOT-CLICKED":
-            return {...state, isButtonNotClicked: action.payload.value}
+            return {...state,
+                isButtonNotClicked: action.payload.value}
         case "SET-ERROR":
-            return {...state, error: action.payload.error}
+            return {...state,
+                error: action.payload.error}
         case "SET-INPUT-ERROR":
-            return {...state, inputError: {...state.inputError, min: action.payload.inputError.min, max: action.payload.inputError.max}}
+            return {...state,
+                inputError: {...state.inputError, min: action.payload.inputError.min, max: action.payload.inputError.max}}
         default:
             return state
     }

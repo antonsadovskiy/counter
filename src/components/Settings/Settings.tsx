@@ -1,27 +1,24 @@
 import React, {FC, useCallback} from 'react';
-import MaxValueInput from "./MaxValueInput/MaxValueInput";
-import StartValueInput from "./StartValueInput/StartValueInput";
 import s from './Settings.module.css'
 import {changeSettingsValueAC} from "../../redux/settings/settingsReducer";
 import {useDispatch} from "react-redux";
 import {setStartAsCountAC} from "../../redux/counter/counterReducer";
-import {InputErrorType, setIsButtonNotClickedAC} from "../../redux/errors/errorsReducer";
+import {setIsButtonNotClickedAC} from "../../redux/errors/errorsReducer";
 import MyButton from "../Button/Button";
+import Input from "./Input/Input";
 
 export type SettingPropsType = {
     maxValue: number
     startValue: number
     isButtonNotClicked: boolean
-    inputError: InputErrorType
     disableSetButton: boolean
 }
 
-const Settings:FC<SettingPropsType> = React.memo((
+const Settings: FC<SettingPropsType> = React.memo((
     {
         maxValue,
         startValue,
         isButtonNotClicked,
-        inputError,
         disableSetButton,
     }
 ) => {
@@ -32,37 +29,34 @@ const Settings:FC<SettingPropsType> = React.memo((
         dispatch(changeSettingsValueAC('maxValue', Math.floor(value)))
         dispatch(setIsButtonNotClickedAC(true))
     }, [dispatch])
+
     const changeStartValue = useCallback((value: number) => {
         dispatch(changeSettingsValueAC('startValue', Math.floor(value)))
         dispatch(setIsButtonNotClickedAC(true))
     }, [dispatch])
+
     const setStartAsCount = useCallback(() => {
         dispatch(setStartAsCountAC(startValue))
         dispatch(setIsButtonNotClickedAC(false))
     }, [dispatch, startValue])
 
-    // useEffect(() => {
-    //     localStorage.setItem('maxValue', JSON.stringify(maxValue))
-    //     localStorage.setItem('startValue', JSON.stringify(startValue))
-    // },[maxValue, startValue])
-
     return (
         <div className={s.settingsContainer}>
             <div className={s.inputsContainer}>
-                <MaxValueInput maxValue={maxValue}
-                              changeMaxValue={changeMaxValue}
-                              startValue={startValue}
-                              inputError={inputError}/>
-                <StartValueInput startValue={startValue}
-                                 changeStartValue={changeStartValue}
-                                 maxValue={maxValue}
-                                 inputError={inputError}/>
+                <Input inputType={'max'}
+                       value={maxValue}
+                       changeValue={changeMaxValue}
+                       oppositeValue={startValue}/>
+                <Input inputType={'min'}
+                       value={startValue}
+                       changeValue={changeStartValue}
+                       oppositeValue={maxValue}/>
             </div>
             <div className={s.buttonContainer}>
                 <MyButton name={'set'}
-                        callback={setStartAsCount}
-                        isButtonNotClicked={!isButtonNotClicked}
-                        disableSetButton={disableSetButton}/>
+                          callback={setStartAsCount}
+                          isButtonNotClicked={!isButtonNotClicked}
+                          disableSetButton={disableSetButton}/>
             </div>
         </div>
     );

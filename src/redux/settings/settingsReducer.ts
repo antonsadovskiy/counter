@@ -1,20 +1,12 @@
-export type ActionsType = ReturnType<typeof changeSettingsValueAC>
+type ChangeSettingsValueAT = ReturnType<typeof changeSettingsValueAC>
+
+type ActionsType = ChangeSettingsValueAT
 export type SettingType = 'maxValue' | 'startValue'
 
 export type SettingsStateType = {
     maxValue: number,
     startValue: number
 }
-
-const getMaxValueFromLS = () => {
-    const maxValue = localStorage.getItem('maxValue')
-    return maxValue ? JSON.parse(maxValue ?? '') : 0
-}
-const getStartValueFromLS = () => {
-    const startValue = localStorage.getItem('startValue')
-    return startValue ? JSON.parse(startValue ?? '') : 0
-}
-
 
 const initialState: SettingsStateType = {
     maxValue: 1,
@@ -31,11 +23,11 @@ export const settingsReducer = (state: SettingsStateType = initialState, action:
 }
 
 export const changeSettingsValueAC = (settingType: SettingType, value: number) => {
-    return ({
+    return {
         type: 'CHANGE-VALUE',
         payload: {
             settingType,
             value
         }
-    })
+    } as const
 }
